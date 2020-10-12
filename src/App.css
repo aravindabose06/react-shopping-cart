@@ -42,3 +42,22 @@
     margin-left: -15rem;
   }
 }
+
+.badge {
+  position: absolute;
+  top: -7px !important;
+  right: -5px;
+  padding: 3px 6px;
+  opacity: 0.95;
+}
+
+.cart-empty-text {
+  position: absolute;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.cart-empty-img {
+  margin-top: 75px;
+}
