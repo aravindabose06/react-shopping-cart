@@ -1,14 +1,16 @@
 import React from 'react';
 import './App.css';
 import MainComponent from './components/MainComponent';
-import CartComponent from './components/CartComponent';
-import HeaderComponent from './components/HeaderComponent';
+import { Provider } from 'react-redux'
+import store from './redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <MainComponent />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <MainComponent />
+      </div>
+    </Provider>
   );
 }
 

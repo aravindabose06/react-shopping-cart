@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { removeItem, incrementQuantity, decrementQuantity, clearCart } from '../redux/cart/cartActions'
 
-function CartComponent({ cartItems, removeFromCart, incrementQuantity, decrementQuantity, purchase }) {
-    const [totalAmount, setTotalAmount] = useState(0)
-    let amount = 0
-
-    useEffect(() => {
-        setTotalAmount(amount)
-    })
+function CartComponent({ cartItems, removeItem, incrementQuantity, decrementQuantity, totalAmount, clearCart }) {
 
     return cartItems.length === 0 ? 
         ( <div className="container">
@@ -31,14 +27,13 @@ function CartComponent({ cartItems, removeFromCart, incrementQuantity, decrement
                 <tbody>
                     {
                         cartItems.map(item => {
-                            amount = amount + parseInt(item.price)
                             return (
                             <tr key={item.id}>
                                 <td><img width={75} height={75} src="assets/images/sample1.png" alt="Cart Item"/></td>
                                 <td>{item.name}</td>
-                                <td> <button disabled={item.quantity <= 1} onClick={() => decrementQuantity(item.id)} className="btn btn-secondary btn-sm">-</button> {item.quantity} <button onClick={() => incrementQuantity(item.id)} disabled={item.quantity >= item.stock} className="btn btn-secondary btn-sm">+</button></td>
+                                <td> <button disabled={item.quantity <= 1} onClick={() => decrementQuantity(item)} className="btn btn-secondary btn-sm">-</button> {item.quantity} <button onClick={() => incrementQuantity(item)} disabled={item.quantity >= item.stock} className="btn btn-secondary btn-sm">+</button></td>
                                 <td>Rs.{parseInt(item.price)}</td>
-                                <td><button onClick={() => removeFromCart(item)} className="btn btn-danger">Remove</button></td>
+                                <td><button onClick={() => removeItem(item)} className="btn btn-danger">Remove</button></td>
                             </tr>
                         )})
                     }
@@ -53,10 +48,28 @@ function CartComponent({ cartItems, removeFromCart, incrementQuantity, decrement
                 </div>
             </div>
             <div className="row justify-content-center mt-3 mb-5">
-                <button onClick={() => purchase()} className="btn btn-primary btn-lg">Purchase</button>
+                <button onClick={() => {
+                    alert("Thank you for your purchase.")
+                    clearCart()
+                    }} className="btn btn-primary btn-lg">Purchase</button>
             </div>
         </div>
     )
 }
 
-export default CartComponent
+const mapStateToProps = state => {
+    return {
+        totalAmount: state.cart.totalAmount
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        removeItem: (item) => dispatch(removeItem(item)),
+        incrementQuantity: (item) => dispatch(incrementQuantity(item)),
+        decrementQuantity: (item) => dispatch(decrementQuantity(item)),
+        clearCart: () => dispatch(clearCart())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartComponent)
