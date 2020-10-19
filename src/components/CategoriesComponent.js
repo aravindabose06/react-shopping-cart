@@ -1,4 +1,5 @@
 import React from 'react'
+import { Spinner } from 'reactstrap';
 
 function CategoriesComponent({ categoriesState, changeCategory }) {
 
@@ -7,7 +8,7 @@ function CategoriesComponent({ categoriesState, changeCategory }) {
             <div className="sidebar-heading ml-3"><h4>Categories</h4></div>
             <div className="list-group list-group-flush">
                 {
-                    categoriesState.loading ? ( <div>Loading...</div> ) :
+                    categoriesState.loading ? ( <Spinner className="loading-spinner" size="md" color="secondary" /> ) :
                             categoriesState.error ? ( <div>Error Occured :(</div> ) : 
                             (
                                 <>
