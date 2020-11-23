@@ -44,8 +44,8 @@
 }
 
 .badge {
-  position: absolute;
-  top: -7px !important;
+  position: relative;
+  top: -10px !important;
   right: -5px;
   padding: 3px 6px;
   opacity: 0.95;
